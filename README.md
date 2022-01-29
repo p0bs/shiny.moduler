@@ -1,6 +1,6 @@
 # shiny.moduler
 
-`shiny.moduler` provides a simple Shiny app that controls underlying Shiny modules. It is deliberately simple and unpolished. (For example, there are no unit tests or error checks in the app.)
+`shiny.moduler` provides a simple Shiny app that controls underlying Shiny modules. It is deliberately unpolished -- for example, there are no unit tests or error checks in the app.
 
 Why create this functionality? Well, I found that most documentation for Shiny stopped just prior to the point of building a main module to control sub-modules, so I shared my code in the hope that this test package might help others.
 
