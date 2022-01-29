@@ -9,7 +9,7 @@ Why create this functionality? Well, I found that most documentation for Shiny s
 You can install the latest version of `shiny.moduler` as follows:
 
 ``` r
-devtools::install_github("r-lib/covr")
+devtools::install_github("p0bs/shiny.moduler")
 ```
 
 ## Example
