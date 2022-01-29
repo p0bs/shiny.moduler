@@ -1,6 +1,6 @@
 Package: shiny.moduler
 Type: Package
-Title: Test Case Of Main And Sub Modules In Shiny
+Title: Unpolished Test Case Of Main And Sub Modules In Shiny
 Version: 0.1.0
 Authors@R: 
   person(
