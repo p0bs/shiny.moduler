@@ -24,7 +24,8 @@ Suggests:
     readr,
     scales,
     tibble,
-    tidyr,
     tidyquant,
+    tidyr,
+    tidyselect,
     tsibble
 RoxygenNote: 7.1.2

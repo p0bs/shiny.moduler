@@ -90,18 +90,7 @@ server_sectors <- function(id, data_import){
 #' @inheritParams ui_sectors
 app_sectors <- function(){
   
-  # Sector data
-  link_17 <- 'http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/17_Industry_Portfolios_daily_CSV.zip'
-  temp <- tempfile()
-  download.file(link_17 ,temp)
-  data_import <- readr::read_csv(temp, skip = 9, na = c(-99.99, -999, "NA", "N/A", "n/a", "na")) %>% 
-    dplyr::mutate(
-      dplyr::across(.cols = is.numeric, .fns = ~ .x/100),
-      Date = lubridate::ymd(as.integer(`...1`)), 
-      .before = 1
-    ) %>% 
-    dplyr::select(-`...1`) %>% 
-    tidyr::gather(key = "Sector", value = "Return", -Date)
+  data_import <- get_data_sectors()
   
   # Ignore error checking of start and end years for now
   ui <- shiny::fluidPage(
