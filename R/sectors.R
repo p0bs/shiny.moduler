@@ -1,55 +1,75 @@
-ui_sectors <- function(id, data_import){
-  tagList(
-    sidebarPanel(
-      selectInput(NS(id, "year_start"), "Starting Year", choices = unique(year(data_import$Date)), selected = min(year(data_import$Date), na.rm = TRUE)),
-      selectInput(NS(id, "year_end"), "Final Year", choices = unique(year(data_import$Date)), selected = max(year(data_import$Date), na.rm = TRUE)),
-      radioButtons(NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+#' @title Components relating to the sector performance module
+#' @description This function provides the components for running the sector performance module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
+#' @param data_import The data imported on sector performance
+#' @param standalone Whether to view the module on a standalone basis (TRUE) or not (FALSE, the default)
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' app_sectors(standalone = TRUE)
+#' }
+ui_sectors <- function(id, data_import, standalone = FALSE){
+  if(standalone){
+    shiny::tagList(
+      shiny::sidebarPanel(
+        shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(lubridate::year(data_import$Date)), selected = min(lubridate::year(data_import$Date), na.rm = TRUE)),
+        shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(lubridate::year(data_import$Date)), selected = max(lubridate::year(data_import$Date), na.rm = TRUE)),
+        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+      ),
+      shiny::mainPanel(
+        shiny::uiOutput(shiny::NS(id, "output_sectors"))
       )
-    # ,
-    # mainPanel(
-    #   uiOutput(NS(id, "output_sectors"))
-    #   )
     )
+  } else {
+    shiny::tagList(
+      shiny::sidebarPanel(
+        shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(year(data_import$Date)), selected = min(year(data_import$Date), na.rm = TRUE)),
+        shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(year(data_import$Date)), selected = max(year(data_import$Date), na.rm = TRUE)),
+        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+      )
+    )
+  }
 }
 
+#' @inheritParams ui_sectors
 server_sectors <- function(id, data_import){
   moduleServer(id, function(input, output, session){
     
-    stopifnot(!is.reactive(data_import))
+    stopifnot(!shiny::is.reactive(data_import))
     
-    summary_sectors <- reactive({
+    summary_sectors <- shiny::reactive({
       data_import %>% 
-        filter(Date >= make_date(year = input$year_start),
-               Date <= make_date(year = input$year_end, month = 12L, day = 31L)
+        dplyr::filter(Date >= lubridate::make_date(year = input$year_start),
+               Date <= lubridate::make_date(year = input$year_end, month = 12L, day = 31L)
         ) %>% 
-        group_by(Sector) %>% 
-        summarise(
+        dplyr::group_by(Sector) %>% 
+        dplyr::summarise(
           mean = mean(Return, na.rm = TRUE), 
           sd = sd(Return, na.rm = TRUE)
         )
     })
     
-    output_rendered <- reactive({
+    output_rendered <- shiny::reactive({
       switch (input$button_output,
-              "Table" = renderTable({
+              "Table" = shiny::renderTable({
                 summary_sectors() %>%
-                  arrange(desc(mean), desc(sd))
+                  dplyr::arrange(dplyr::desc(mean), dplyr::desc(sd))
               }),
-              "Plot" = renderPlot({
+              "Plot" = shiny::renderPlot({
                 summary_sectors() %>%
-                  ggplot(
-                    aes(
+                  ggplot2::ggplot(
+                    ggplot2::aes(
                       x = sd,
                       y = mean,
                       colour = Sector
                     )
                   ) + 
-                  geom_point() + 
-                  scale_x_continuous(labels = scales::percent_format(accuracy = 0.01)) +
-                  scale_y_continuous(labels = scales::percent_format(accuracy = 0.01)) +
-                  theme_minimal() + 
-                  theme(plot.title.position = "plot") +
-                  labs(
+                  ggplot2::geom_point() + 
+                  ggplot2::scale_x_continuous(labels = scales::percent_format(accuracy = 0.01)) +
+                  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 0.01)) +
+                  ggplot2::theme_minimal() + 
+                  ggplot2::theme(plot.title.position = "plot") +
+                  ggplot2::labs(
                     title = "Comparing the typical return and risk of sectors",
                     subtitle = "\nTypical daily return",
                     x = "\n Variability of daily returns",
@@ -60,42 +80,39 @@ server_sectors <- function(id, data_import){
       )
     })
     
-    output$output_sectors <- renderUI(
+    output$output_sectors <- shiny::renderUI(
       output_rendered()
       )
     
   })
 }
 
+#' @inheritParams ui_sectors
 app_sectors <- function(){
-
-  library(lubridate)
-  library(shiny)
-  library(tidyverse)
   
   # Sector data
   link_17 <- 'http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/17_Industry_Portfolios_daily_CSV.zip'
   temp <- tempfile()
   download.file(link_17 ,temp)
-  data_import <- read_csv(temp, skip = 9, na = c(-99.99, -999, "NA", "N/A", "n/a", "na")) %>% 
-    mutate(
-      across(.cols = is.numeric, .fns = ~ .x/100),
-      Date = ymd(as.integer(`...1`)), 
+  data_import <- readr::read_csv(temp, skip = 9, na = c(-99.99, -999, "NA", "N/A", "n/a", "na")) %>% 
+    dplyr::mutate(
+      dplyr::across(.cols = is.numeric, .fns = ~ .x/100),
+      Date = lubridate::ymd(as.integer(`...1`)), 
       .before = 1
     ) %>% 
-    select(-`...1`) %>% 
-    gather(key = "Sector", value = "Return", -Date)
+    dplyr::select(-`...1`) %>% 
+    tidyr::gather(key = "Sector", value = "Return", -Date)
   
   # Ignore error checking of start and end years for now
-  ui <- fluidPage(
-    titlePanel("Testing Modules with Open Financial Data"),
-    ui_sectors(id = "sectors", data_import = data_import)
+  ui <- shiny::fluidPage(
+    shiny::titlePanel("Testing Modules with Open Financial Data"),
+    ui_sectors(id = "sectors", data_import = data_import, standalone = TRUE)
     )
   
   server <- function(input, output, session) {
     server_sectors(id = "sectors", data_import = data_import)
   }
   
-  shinyApp(ui, server)
+  shiny::shinyApp(ui, server)
   
 }

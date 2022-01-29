@@ -1,36 +1,54 @@
-ui_indicators <- function(id){
-  tagList(
-    sidebarPanel(
-      radioButtons(NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+#' @title Components relating to the economic indicators module
+#' @description This function provides the components for running the economic indicators module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
+#' @param data_import The data imported on economic indicators
+#' @param standalone Whether to view the module on a standalone basis (TRUE) or not (FALSE, the default)
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' app_indicators(standalone = TRUE)
+#' }
+ui_indicators <- function(id, standalone = FALSE){
+  if(standalone){
+    shiny::tagList(
+      shiny::sidebarPanel(
+        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+        ),
+      shiny::mainPanel(
+        shiny::uiOutput(shiny::NS(id, "output_indicators"))
+        )
       )
-    # ,
-    # mainPanel(
-    #   uiOutput(NS(id, "output_indicators"))
-    #   )
-    )
+  } else {
+    shiny::tagList(
+      shiny::sidebarPanel(
+        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+        )
+      )
+    }
 }
 
+#' @inheritParams ui_indicators
 server_indicators <- function(id, data_import){
-  moduleServer(id, function(input, output, session){
+  shiny::moduleServer(id, function(input, output, session){
     
-    stopifnot(!is.reactive(data_import))
+    stopifnot(!shiny::is.reactive(data_import))
     
-    output_rendered <- reactive({
+    output_rendered <- shiny::reactive({
       switch (input$button_output,
-              "Table" = renderTable({
+              "Table" = shiny::renderTable({
                 data_import %>%
-                  as_tibble() %>% 
-                  group_by(series) %>% 
-                  slice_max(order_by = date, n = 1) %>% 
-                  ungroup()
+                  tibble::as_tibble() %>% 
+                  dplyr::group_by(series) %>% 
+                  dplyr::slice_max(order_by = date, n = 1) %>% 
+                  dplyr::ungroup()
               }),
-              "Plot" = renderPlot({
+              "Plot" = shiny::renderPlot({
                 data_import %>% 
-                  autoplot(.vars = level) +
-                  theme_minimal() + 
-                  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-                  theme(plot.title.position = "plot") +
-                  labs(
+                  feasts::autoplot(.vars = level) +
+                  ggplot2::theme_minimal() + 
+                  ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+                  ggplot2::theme(plot.title.position = "plot") +
+                  ggplot2::labs(
                     title = "Comparing changes in economic activity and implied long-term prices \n",
                     x = NULL,
                     y = NULL
@@ -39,21 +57,17 @@ server_indicators <- function(id, data_import){
       )
     })
     
-    output$output_indicators <- renderUI(
+    output$output_indicators <- shiny::renderUI(
       output_rendered()
       )
     
   })
 }
 
+#' @inheritParams ui_indicators
 app_indicators <- function(){
-
-  library(feasts)
-  library(tidyquant)
-  library(tidyverse)
-  library(tsibble)
   
-  data_economy <- tq_get(
+  data_economy <- tidyquant::tq_get(
     x = c(
       "T10YIE",  # 10 Yr Breakeven
       "OB000334Q" # Real Y-O-Y GDP
@@ -61,27 +75,27 @@ app_indicators <- function(){
     get = "economic.data",
     from = "1990-01-01"
   ) %>% 
-    mutate(
-      series = if_else(
+    dplyr::mutate(
+      series = dplyr::if_else(
         symbol == "T10YIE", 
         "10 Yr Breakeven", 
         "Real Y-O-Y GDP"
       ),
       level = price / 100
     ) %>% 
-    select(-symbol, -price) %>% 
-    as_tsibble(key = series, index = date) %>%
-    filter(date > '2002-01-01')
+    dplyr::select(-symbol, -price) %>% 
+    tsibble::as_tsibble(key = series, index = date) %>%
+    dplyr::filter(date > '2002-01-01')
   
-  ui <- fluidPage(
-    titlePanel("Testing Modules with Open Economic Indicators"),
-    ui_indicators(id = "indicators")
+  ui <- shiny::fluidPage(
+    shiny::titlePanel("Testing Modules with Open Economic Indicators"),
+    ui_indicators(id = "indicators", standalone = TRUE)
     )
   
   server <- function(input, output, session) {
     server_indicators(id = "indicators", data_import = data_economy)
   }
   
-  shinyApp(ui, server)
+  shiny::shinyApp(ui, server)
   
 }

@@ -1,14 +1,30 @@
 Package: shiny.moduler
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Test Case Of Main And Sub Modules In Shiny
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: 
+  person(
+    given = "Robin", 
+    family = "Penfold", 
+    email = "robinpenfold@icloud.com", 
+    role = c("aut", "cre")
+    ) 
+Description: This package provides a minimally-viable Shiny app with a main selector that controls independent sub-modules in Shiny, each of which can be run alone if necessary.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 
+    magrittr,
     shiny
+Suggests:
+    dplyr,
+    feasts,
+    ggplot2,
+    lubridate,
+    readr,
+    scales,
+    tibble,
+    tidyr,
+    tidyquant,
+    tsibble
 RoxygenNote: 7.1.2

@@ -1,0 +1,9 @@
+url: ~
+template:
+  bootstrap: 5
+  bootswatch: minty
+  bslib:
+    bg: "#ffffff"
+    fg: "#000000"
+    primary: "#63431c"
+    secondary: "#edd9c0"
