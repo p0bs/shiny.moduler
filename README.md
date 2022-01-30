@@ -1,5 +1,9 @@
 # shiny.moduler
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/p0bs/shiny.moduler/workflows/R-CMD-check/badge.svg)](https://github.com/p0bs/shiny.moduler/actions)
+<!-- badges: end -->
+
 `shiny.moduler` provides a simple Shiny app that controls underlying Shiny modules. It is deliberately unpolished -- for example, there are no unit tests or error checks in the app.
 
 Why create this functionality? Well, I found that most documentation for Shiny stopped just prior to the point of building a main module to control sub-modules, so I shared my code in the hope that this test package might help others.
