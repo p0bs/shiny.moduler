@@ -16,7 +16,13 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/app_indicators.html</loc>
+  </url>
+  <url>
     <loc>/reference/app_main.html</loc>
+  </url>
+  <url>
+    <loc>/reference/app_sectors.html</loc>
   </url>
   <url>
     <loc>/reference/get_data_indicators.html</loc>
@@ -29,6 +35,12 @@
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/server_indicators.html</loc>
+  </url>
+  <url>
+    <loc>/reference/server_sectors.html</loc>
   </url>
   <url>
     <loc>/reference/ui_indicators.html</loc>

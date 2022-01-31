@@ -6,7 +6,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">shiny.moduler</a>
 
@@ -54,15 +54,14 @@
 <dd><p>The identifier used in shiny to namespace a module, thereby linking the ui and server components</p></dd>
 <dt>standalone</dt>
 <dd><p>Whether to view the module on a standalone basis (TRUE) or not (FALSE, the default)</p></dd>
-<dt>data_import</dt>
-<dd><p>The data imported on economic indicators</p></dd>
 </dl></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">app_indicators</span><span class="op">(</span>standalone <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">ui_indicators</span><span class="op">(</span>id <span class="op">=</span> <span class="st">"indicators"</span>, standalone <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
+<span class="r-in"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
