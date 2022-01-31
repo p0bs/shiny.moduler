@@ -1,13 +1,41 @@
+#' @name ui_indicators
 #' @title Components relating to the economic indicators module
 #' @description This function provides the components for running the economic indicators module, be that as a sub-module of a bigger app or on a standalone basis.
 #' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
-#' @param data_import The data imported on economic indicators
 #' @param standalone Whether to view the module on a standalone basis (TRUE) or not (FALSE, the default)
 #' @keywords module
 #' @examples
 #' \dontrun{
-#' app_indicators(standalone = TRUE)
+#' ui_indicators(id = "indicators", standalone = TRUE)
 #' }
+#' 
+NULL
+
+#' @name server_indicators
+#' @title Components relating to the economic indicators module
+#' @description This function provides the components for running the economic indicators module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
+#' @param data_import The data imported on economic indicators
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' server_indicators(id = "indicators", data_import = data_imported)
+#' }
+#' 
+NULL
+
+#' @name app_indicators
+#' @title Components relating to the economic indicators module
+#' @description This function provides the components for running the economic indicators module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' app_indicators()
+#' }
+#' 
+NULL
+
+#' @rdname ui_indicators
 ui_indicators <- function(id, standalone = FALSE){
   if(standalone){
     shiny::tagList(
@@ -27,7 +55,7 @@ ui_indicators <- function(id, standalone = FALSE){
     }
 }
 
-#' @inheritParams ui_indicators
+#' @rdname server_indicators
 server_indicators <- function(id, data_import){
   shiny::moduleServer(id, function(input, output, session){
     
@@ -64,7 +92,7 @@ server_indicators <- function(id, data_import){
   })
 }
 
-#' @inheritParams ui_indicators
+#' @rdname app_indicators
 app_indicators <- function(){
   
   data_economy <- get_data_indicators()

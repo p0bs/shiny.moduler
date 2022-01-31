@@ -1,3 +1,4 @@
+#' @name ui_sectors
 #' @title Components relating to the sector performance module
 #' @description This function provides the components for running the sector performance module, be that as a sub-module of a bigger app or on a standalone basis.
 #' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
@@ -6,8 +7,33 @@
 #' @keywords module
 #' @examples
 #' \dontrun{
-#' app_sectors(standalone = TRUE)
+#' ui_sectors(id = "sectors", data_import = data_imported, standalone = TRUE)
 #' }
+NULL
+
+#' @name server_sectors
+#' @title Components relating to the sector performance module
+#' @description This function provides the components for running the sector performance module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @param id The identifier used in shiny to namespace a module, thereby linking the ui and server components
+#' @param data_import The data imported on sector performance
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' server_sectors(id = "sectors", data_import = data_imported)
+#' }
+NULL
+
+#' @name app_sectors
+#' @title Components relating to the sector performance module
+#' @description This function provides the components for running the sector performance module, be that as a sub-module of a bigger app or on a standalone basis.
+#' @keywords module
+#' @examples
+#' \dontrun{
+#' app_sectors()
+#' }
+NULL
+
+#' @rdname ui_sectors
 ui_sectors <- function(id, data_import, standalone = FALSE){
   if(standalone){
     shiny::tagList(
@@ -31,7 +57,7 @@ ui_sectors <- function(id, data_import, standalone = FALSE){
   }
 }
 
-#' @inheritParams ui_sectors
+#' @rdname server_sectors
 server_sectors <- function(id, data_import){
   moduleServer(id, function(input, output, session){
     
@@ -87,7 +113,7 @@ server_sectors <- function(id, data_import){
   })
 }
 
-#' @inheritParams ui_sectors
+#' @rdname app_sectors
 app_sectors <- function(){
   
   data_import <- get_data_sectors()

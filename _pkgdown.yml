@@ -1,9 +1,31 @@
 url: ~
 template:
   bootstrap: 5
-  bootswatch: minty
+  bootswatch: lux
   bslib:
+    pkgdown-nav-height: 100px
     bg: "#ffffff"
     fg: "#000000"
     primary: "#63431c"
     secondary: "#edd9c0"
+    enable-rounded: FALSE
+  navbar:
+    bg: primary
+reference:
+- title: Run the app
+  contents:
+  - starts_with("app_main")
+- title: Run the submodules standalone
+  contents:
+  - starts_with("app_indicators")
+  - starts_with("app_sectors")
+- title: UI functions for the standalone submodules
+  contents:
+  - starts_with("ui_")
+- title: Server functions for the standalone submodules
+  contents:
+  - starts_with("server_")
+- title: Helper functions
+  contents:
+  - starts_with("get_")
+  - starts_with("utils-")

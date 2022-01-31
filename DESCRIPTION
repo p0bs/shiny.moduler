@@ -21,6 +21,7 @@ Suggests:
     feasts,
     ggplot2,
     lubridate,
+    testthat (>= 3.0.0),
     readr,
     scales,
     tibble,
@@ -29,3 +30,4 @@ Suggests:
     tidyselect,
     tsibble
 RoxygenNote: 7.1.2
+Config/testthat/edition: 3
