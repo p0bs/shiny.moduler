@@ -65,8 +65,9 @@ server_sectors <- function(id, data_import){
     
     summary_sectors <- shiny::reactive({
       data_import %>% 
-        dplyr::filter(Date >= lubridate::make_date(year = input$year_start),
-               Date <= lubridate::make_date(year = input$year_end, month = 12L, day = 31L)
+        dplyr::filter(
+          Date >= lubridate::make_date(year = input$year_start),
+          Date <= lubridate::make_date(year = input$year_end, month = 12L, day = 31L)
         ) %>% 
         dplyr::group_by(Sector) %>% 
         dplyr::summarise(
@@ -79,6 +80,10 @@ server_sectors <- function(id, data_import){
       switch (input$button_output,
               "Table" = shiny::renderTable({
                 summary_sectors() %>%
+                  dplyr::mutate(
+                    mean = mean * 100,
+                    sd = sd * 100
+                  ) %>% 
                   dplyr::arrange(dplyr::desc(mean), dplyr::desc(sd))
               }),
               "Plot" = shiny::renderPlot({

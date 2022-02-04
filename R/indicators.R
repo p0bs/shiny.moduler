@@ -68,7 +68,12 @@ server_indicators <- function(id, data_import){
                   tibble::as_tibble() %>% 
                   dplyr::group_by(series) %>% 
                   dplyr::slice_max(order_by = date, n = 1) %>% 
-                  dplyr::ungroup()
+                  dplyr::ungroup() %>% 
+                  dplyr::mutate(
+                    date = as.character.Date(date),
+                    latest = level * 100
+                    ) %>% 
+                  dplyr::select(-level)
               }),
               "Plot" = shiny::renderPlot({
                 data_import %>% 
