@@ -48,11 +48,9 @@ ui_sectors <- function(id, data_import, standalone = FALSE){
     )
   } else {
     shiny::tagList(
-      shiny::sidebarPanel(
-        shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(lubridate::year(data_import$Date)), selected = min(lubridate::year(data_import$Date), na.rm = TRUE)),
-        shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(lubridate::year(data_import$Date)), selected = max(lubridate::year(data_import$Date), na.rm = TRUE)),
-        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
-      )
+      shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(lubridate::year(data_import$Date)), selected = min(lubridate::year(data_import$Date), na.rm = TRUE)),
+      shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(lubridate::year(data_import$Date)), selected = max(lubridate::year(data_import$Date), na.rm = TRUE)),
+      shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
     )
   }
 }

@@ -12,11 +12,17 @@ app_main <- function(){
   
   ui <- shiny::fluidPage(
     shiny::titlePanel("Testing Modules"),
-    shiny::fluidPage(
-      shiny::selectInput("analysis", "Analysis", choices = c("Sectors", "Indicators"), multiple = FALSE, selected = "Indicators"),
-      shiny::uiOutput("inputs"),
-      shiny::uiOutput("outputs"))
-  )
+    sidebarLayout(
+      sidebarPanel(
+        width = 3,
+        shiny::selectInput("analysis", "Analysis", choices = c("Sectors", "Indicators"), multiple = FALSE, selected = "Indicators"),
+        shiny::uiOutput("inputs")
+        ),
+      mainPanel(
+        shiny::uiOutput("outputs")
+        )
+      )
+    )
   
   server <- function(input, output) {
     

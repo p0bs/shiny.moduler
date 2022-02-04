@@ -10,6 +10,8 @@
 
 Why create this package? Well, I found that most of the code examples for Shiny stopped just before the point of building a main module to control sub-modules. As such, I thought I would go a bit further, in the hope that it might prove useful to others.
 
+To see the resulting Shiny app, [run it here](https://robin.shinyapps.io/Modules/).
+
 <br/>
 
 ## Installation
