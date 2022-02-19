@@ -1,3 +1,6 @@
+# shiny.moduler 0.2.2
+* Changing app address
+
 # shiny.moduler 0.2.1
 * Adding some missing double colons
 

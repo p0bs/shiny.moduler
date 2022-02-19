@@ -1,7 +1,7 @@
 Package: shiny.moduler
 Type: Package
 Title: Unpolished Test Case Of Main And Sub Modules In Shiny
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: 
   person(
     given = "Robin", 
