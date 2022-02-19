@@ -1,3 +1,7 @@
+# shiny.moduler 0.2.1
+* Adding some missing double colons
+
+
 # shiny.moduler 0.2.0
 * Adding some polish to UI and outputs
 

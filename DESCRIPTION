@@ -1,7 +1,7 @@
 Package: shiny.moduler
 Type: Package
 Title: Unpolished Test Case Of Main And Sub Modules In Shiny
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
   person(
     given = "Robin", 
@@ -15,7 +15,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     magrittr,
-    shiny
+    shiny (>= 1.7.1)
 Suggests:
     dplyr,
     feasts,
