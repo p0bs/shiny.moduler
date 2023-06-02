@@ -1,7 +1,6 @@
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/p0bs/shiny.moduler/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/p0bs/shiny.moduler/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/p0bs/shiny.moduler/branch/main/graph/badge.svg)](https://app.codecov.io/gh/p0bs/shiny.moduler?branch=main)
 <!-- badges: end -->
 
 <br/>
