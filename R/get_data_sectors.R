@@ -8,7 +8,7 @@
 get_data_sectors <- function(){
   link_17 <- 'http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/17_Industry_Portfolios_daily_CSV.zip'
   temp <- tempfile()
-  download.file(link_17 ,temp)
+  utils::download.file(link_17 ,temp)
   data_import <- readr::read_csv(
     temp, 
     col_types = readr::cols(`...1` = readr::col_date(format = "%Y%m%d")), 
@@ -19,7 +19,7 @@ get_data_sectors <- function(){
     dplyr::slice(1) %>% 
     dplyr::ungroup() %>% 
     dplyr::mutate(
-      dplyr::across(.cols = tidyselect:::where(is.numeric), .fns = ~ .x/100)
+      dplyr::across(.cols = tidyselect::where(is.numeric), .fns = ~ .x/100)
     ) %>% 
     dplyr::rename("Date" = `...1`) %>% 
     tidyr::gather(key = "Sector", value = "Return", -Date)

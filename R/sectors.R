@@ -70,7 +70,7 @@ server_sectors <- function(id, data_import){
         dplyr::group_by(Sector) %>% 
         dplyr::summarise(
           mean = mean(Return, na.rm = TRUE), 
-          sd = sd(Return, na.rm = TRUE)
+          stdev = stats::sd(Return, na.rm = TRUE)
         )
     })
     
@@ -80,15 +80,15 @@ server_sectors <- function(id, data_import){
                 summary_sectors() %>%
                   dplyr::mutate(
                     mean = mean * 100,
-                    sd = sd * 100
+                    stdev = stdev * 100
                   ) %>% 
-                  dplyr::arrange(dplyr::desc(mean), dplyr::desc(sd))
+                  dplyr::arrange(dplyr::desc(mean), dplyr::desc(stdev))
               }),
               "Plot" = shiny::renderPlot({
                 summary_sectors() %>%
                   ggplot2::ggplot(
                     ggplot2::aes(
-                      x = sd,
+                      x = stdev,
                       y = mean,
                       colour = Sector
                     )
