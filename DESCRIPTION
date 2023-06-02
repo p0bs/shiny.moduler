@@ -17,6 +17,7 @@ Imports:
     magrittr,
     shiny (>= 1.7.1)
 Suggests:
+    bslib,
     dplyr,
     feasts,
     ggplot2,
