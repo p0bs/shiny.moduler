@@ -10,34 +10,28 @@ app_main <- function(){
   data_import <- get_data_sectors()
   data_economy <- get_data_indicators()
   
-  # <i class="fa-solid fa-q"></i>
-  
-  ui <- shiny::navbarPage(
-    title = "Testing Modules", 
+  ui <- bslib::page_fillable(
+    bslib::card(
+      full_screen = TRUE,
+      bslib::card_header("Testing modules"),
+      bslib::layout_sidebar(
+        sidebar = bslib::sidebar(
+          shiny::selectInput("analysis", "Analysis", choices = c("Sectors", "Indicators"), multiple = FALSE, selected = "Indicators"),
+          shiny::uiOutput("inputs")
+        ),
+        shiny::uiOutput("outputs")
+        )
+      ),
+    title = "Testing modules", 
     theme = bslib::bs_theme(
       bootswatch = "minty",
       version = 5, bg = "white", fg = "black",
-      primary = "#711984", info = "#ffb900",
-      secondary = "#c111a0",  success = "#00865c",
-      warning = "#ffb900", danger = "#c111a0",
+      primary = "#63431c", secondary = "#f9f3ec",
       code_font = bslib::font_collection("Arial", "sans-serif"),
-      "enable-rounded" = TRUE, 
-      "dropdown-bg" = "#f2f2f2",
-      "dropdown-link-hover-bg" = "#711984",
-      "dropdown-link-hover-color" = "white",
-      "pagination-padding-x" = "35px",
-      "list-inline-padding" = "35px",
-      "navbar-bg" = "#f4f4f4"  #?
-    ),
-    shiny::sidebarLayout(
-      shiny::sidebarPanel(
-        width = 3,
-        shiny::selectInput("analysis", "Analysis", choices = c("Sectors", "Indicators"), multiple = FALSE, selected = "Indicators"),
-        shiny::uiOutput("inputs")
-        ),
-      shiny::mainPanel(
-        shiny::uiOutput("outputs")
-        )
+      "dropdown-bg" = "#f9f3ec",
+      "dropdown-link-hover-bg" = "#63431c",
+      "card-border-color" = "white",
+      "navbar-bg" = "#f9f3ec"
       )
     )
   
