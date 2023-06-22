@@ -1,0 +1,12 @@
+#' Historical returns data for US sectors.
+#'
+#' A dataset containing the daily historical returns of 17 US sectors from 1st July 1926.
+#'
+#' @format A data frame with hundreds of thousands of rows (one for each day/sector) and 3 variables:
+#' \describe{
+#'   \item{Date}{the day on which the return occurs}
+#'   \item{Sector}{the sector with that given return on the day in question}
+#'   \item{Return}{the return of the given sector on the day in question}
+#' }
+#' @source \url{http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/17_Industry_Portfolios_daily_CSV.zip}
+"sectors_data"

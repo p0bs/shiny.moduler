@@ -40,7 +40,7 @@ ui_sectors <- function(id, data_import, standalone = FALSE){
       shiny::sidebarPanel(
         shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(lubridate::year(data_import$Date)), selected = min(lubridate::year(data_import$Date), na.rm = TRUE)),
         shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(lubridate::year(data_import$Date)), selected = max(lubridate::year(data_import$Date), na.rm = TRUE)),
-        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+        shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
       ),
       shiny::mainPanel(
         shiny::uiOutput(shiny::NS(id, "output_sectors"))
@@ -50,7 +50,7 @@ ui_sectors <- function(id, data_import, standalone = FALSE){
     shiny::tagList(
       shiny::selectInput(shiny::NS(id, "year_start"), "Starting Year", choices = unique(lubridate::year(data_import$Date)), selected = min(lubridate::year(data_import$Date), na.rm = TRUE)),
       shiny::selectInput(shiny::NS(id, "year_end"), "Final Year", choices = unique(lubridate::year(data_import$Date)), selected = max(lubridate::year(data_import$Date), na.rm = TRUE)),
-      shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+      shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
     )
   }
 }
@@ -119,9 +119,8 @@ server_sectors <- function(id, data_import){
 #' @rdname app_sectors
 app_sectors <- function(){
   
-  data_import <- get_data_sectors()
+  data_import <- sectors_data
   
-  # Ignore error checking of start and end years for now
   ui <- shiny::fluidPage(
     shiny::titlePanel("Testing Modules with Open Financial Data"),
     ui_sectors(id = "sectors", data_import = data_import, standalone = TRUE)

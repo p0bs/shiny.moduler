@@ -7,21 +7,18 @@
 #' }
 app_main <- function(){
   
-  data_import <- get_data_sectors()
+  data_import <- sectors_data
   data_economy <- get_data_indicators()
   
   ui <- bslib::page_fillable(
     bslib::card(
       full_screen = TRUE,
-      bslib::card_header("Testing modules"),
+      bslib::card_header("Demonstrating the use of modules"),
       bslib::layout_sidebar(
         sidebar = bslib::sidebar(
-          shiny::selectInput("analysis", "Analysis", choices = c("Sectors", "Indicators"), multiple = FALSE, selected = "Indicators"),
-          shiny::uiOutput("inputs")
-        ),
-        shiny::uiOutput("outputs")
-        )
-      ),
+          shiny::selectInput("analysis", "Analysis", choices = c("Sector Market History", "Economic Indicators"), multiple = FALSE, selected = "Economic Indicators"),
+          shiny::uiOutput("inputs", fill = "item")),
+        shiny::uiOutput("outputs"))),
     title = "Testing modules", 
     theme = bslib::bs_theme(
       bootswatch = "minty",
@@ -40,8 +37,8 @@ app_main <- function(){
     ui_inputs <- shiny::reactive({
       switch (
         input$analysis,
-        "Sectors" = ui_sectors(id = "sectors", data_import = data_import),
-        "Indicators" = ui_indicators(id = "indicators"))
+        "Sector Market History" = ui_sectors(id = "sectors", data_import = data_import),
+        "Economic Indicators" = ui_indicators(id = "indicators"))
     })
     
     output$inputs <- shiny::renderUI(ui_inputs())
@@ -49,8 +46,8 @@ app_main <- function(){
     ui_outputs <- shiny::reactive({
       switch (
         input$analysis,
-        "Sectors" = server_sectors(id = "sectors", data_import = data_import),
-        "Indicators" = server_indicators(id = "indicators", data_import = data_economy))
+        "Sector Market History" = server_sectors(id = "sectors", data_import = data_import),
+        "Economic Indicators" = server_indicators(id = "indicators", data_import = data_economy))
     })
     
     output$outputs <- shiny::renderUI(ui_outputs())

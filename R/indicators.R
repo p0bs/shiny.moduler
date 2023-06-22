@@ -40,7 +40,7 @@ ui_indicators <- function(id, standalone = FALSE){
   if(standalone){
     shiny::tagList(
       shiny::sidebarPanel(
-        shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+        shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
         ),
       shiny::mainPanel(
         shiny::uiOutput(shiny::NS(id, "output_indicators"))
@@ -48,7 +48,7 @@ ui_indicators <- function(id, standalone = FALSE){
       )
   } else {
     shiny::tagList(
-      shiny::radioButtons(shiny::NS(id, "button_output"), "Choose Output", choices = c("Plot", "Table"), selected = "Table")
+      shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
       )
     }
 }

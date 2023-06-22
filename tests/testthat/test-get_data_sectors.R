@@ -1,4 +1,4 @@
-data_test_sectors <- shiny.moduler:::get_data_sectors()
+data_test_sectors <- sectors_data
 
 test_that("Expected column names", {
   expect_equal(
