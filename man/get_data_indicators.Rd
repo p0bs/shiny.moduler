@@ -13,5 +13,6 @@ This function enables you to import data relating to key US economic indicators 
 \dontrun{
 get_data_indicators()
 }
+
 }
 \keyword{data}

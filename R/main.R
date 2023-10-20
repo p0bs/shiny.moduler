@@ -7,7 +7,7 @@
 #' }
 app_main <- function(){
   
-  data_import <- sectors_data
+  data_import <- shiny.moduler::sectors_data
   data_economy <- get_data_indicators()
   
   ui <- bslib::page_fillable(

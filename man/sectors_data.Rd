@@ -19,6 +19,6 @@ A data frame with hundreds of thousands of rows (one for each day/sector) and 3 
 sectors_data
 }
 \description{
-A dataset containing the daily historical returns of 17 US sectors from 1st July 1926.
+A dataset containing the daily historical returns of 17 US sectors from 1st July 1926 to 19th October 2023.
 }
 \keyword{datasets}

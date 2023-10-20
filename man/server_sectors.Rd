@@ -18,5 +18,6 @@ This function provides the components for running the sector performance module,
 \dontrun{
 server_sectors(id = "sectors", data_import = data_imported)
 }
+
 }
 \keyword{module}

@@ -21,6 +21,8 @@ NULL
 #' \dontrun{
 #' server_indicators(id = "indicators", data_import = data_imported)
 #' }
+#'
+#' @importFrom rlang .data
 #' 
 NULL
 
@@ -41,16 +43,16 @@ ui_indicators <- function(id, standalone = FALSE){
     shiny::tagList(
       shiny::sidebarPanel(
         shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
-        ),
+      ),
       shiny::mainPanel(
         shiny::uiOutput(shiny::NS(id, "output_indicators"))
-        )
       )
+    )
   } else {
     shiny::tagList(
       shiny::radioButtons(shiny::NS(id, "button_output"), "", choices = c("Plot", "Table"), selected = "Table")
-      )
-    }
+    )
+  }
 }
 
 #' @rdname server_indicators
@@ -64,18 +66,18 @@ server_indicators <- function(id, data_import){
               "Table" = shiny::renderTable({
                 data_import %>%
                   tibble::as_tibble() %>% 
-                  dplyr::group_by(series) %>% 
-                  dplyr::slice_max(order_by = date, n = 1) %>% 
+                  dplyr::group_by(.data$series) %>% 
+                  dplyr::slice_max(order_by = .data$date, n = 1) %>% 
                   dplyr::ungroup() %>% 
                   dplyr::mutate(
-                    date = as.character.Date(date),
-                    latest = level * 100
+                    date = as.character.Date(.data$date),
+                    latest = .data$level * 100
                     ) %>% 
-                  dplyr::select(-level)
+                  dplyr::select(-.data$level)
               }),
               "Plot" = shiny::renderPlot({
                 data_import %>% 
-                  feasts::autoplot(.vars = level) +
+                  feasts::autoplot(.vars = .data$level) +
                   ggplot2::theme_minimal() + 
                   ggplot2::scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
                   ggplot2::theme(plot.title.position = "plot") +

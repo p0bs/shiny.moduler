@@ -21,6 +21,9 @@ NULL
 #' \dontrun{
 #' server_sectors(id = "sectors", data_import = data_imported)
 #' }
+#' 
+#' @importFrom rlang .data
+#' 
 NULL
 
 #' @name app_sectors
@@ -57,20 +60,20 @@ ui_sectors <- function(id, data_import, standalone = FALSE){
 
 #' @rdname server_sectors
 server_sectors <- function(id, data_import){
-  moduleServer(id, function(input, output, session){
+  shiny::moduleServer(id, function(input, output, session){
     
     stopifnot(!shiny::is.reactive(data_import))
     
     summary_sectors <- shiny::reactive({
       data_import %>% 
         dplyr::filter(
-          Date >= lubridate::make_date(year = input$year_start),
-          Date <= lubridate::make_date(year = input$year_end, month = 12L, day = 31L)
+          .data$Date >= lubridate::make_date(year = input$year_start),
+          .data$Date <= lubridate::make_date(year = input$year_end, month = 12L, day = 31L)
         ) %>% 
-        dplyr::group_by(Sector) %>% 
+        dplyr::group_by(.data$Sector) %>% 
         dplyr::summarise(
-          mean = mean(Return, na.rm = TRUE), 
-          stdev = stats::sd(Return, na.rm = TRUE)
+          mean = mean(.data$Return, na.rm = TRUE), 
+          stdev = stats::sd(.data$Return, na.rm = TRUE)
         )
     })
     
@@ -79,18 +82,18 @@ server_sectors <- function(id, data_import){
               "Table" = shiny::renderTable({
                 summary_sectors() %>%
                   dplyr::mutate(
-                    mean = mean * 100,
-                    stdev = stdev * 100
+                    mean = .data$mean * 100,
+                    stdev = .data$stdev * 100
                   ) %>% 
-                  dplyr::arrange(dplyr::desc(mean), dplyr::desc(stdev))
+                  dplyr::arrange(dplyr::desc(.data$mean), dplyr::desc(.data$stdev))
               }),
               "Plot" = shiny::renderPlot({
                 summary_sectors() %>%
                   ggplot2::ggplot(
                     ggplot2::aes(
-                      x = stdev,
-                      y = mean,
-                      colour = Sector
+                      x = .data$stdev,
+                      y = .data$mean,
+                      colour = .data$Sector
                     )
                   ) + 
                   ggplot2::geom_point() + 
@@ -119,7 +122,7 @@ server_sectors <- function(id, data_import){
 #' @rdname app_sectors
 app_sectors <- function(){
   
-  data_import <- sectors_data
+  data_import <- shiny.moduler::sectors_data
   
   ui <- shiny::fluidPage(
     shiny::titlePanel("Testing Modules with Open Financial Data"),
