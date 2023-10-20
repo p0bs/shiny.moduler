@@ -1,3 +1,6 @@
+# shiny.moduler 0.2.3
+* Tweaking code to remove NOTES from R-CMD-CHECK
+
 # shiny.moduler 0.2.2
 * Changing app address
 
